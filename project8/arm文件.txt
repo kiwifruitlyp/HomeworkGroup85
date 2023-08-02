@@ -1,0 +1,199 @@
+.syntax unified
+.arch armv7-a
+
+/************************************
+  寄存器
+************************************/
+.equ KEY_SIZE, 16
+
+/* 32 位寄存器 */
+.data
+key:       .skip   KEY_SIZE
+input:     .skip   KEY_SIZE
+output:    .skip   KEY_SIZE
+
+/************************************
+  常量
+************************************/
+
+.equ Nb, 4                   /* 列数 */
+.equ Nk, 4                   /* 密钥列数 */
+.equ Nr, 10                  /* 轮数 */
+
+/************************************
+  子函数
+************************************/
+
+.align
+.global SubBytes
+.type SubBytes, %function
+
+SubBytes:
+  ldr r2, =SBox              /* 加载S盒的地址到r2 */
+
+  lsr r1, r1, #8             /* 右移8位 */
+  and r3, r3, #0xFF          /* 清除高24位 */
+
+  ldrb r1, [r2, r1]          /* 加载S盒中的替代字节 */
+  orr r1, r1, r3             /* 替代字节与r3进行或运算 */
+  mov pc, lr                /* 返回 */
+
+.align
+.global ShiftRows
+.type ShiftRows, %function
+
+ShiftRows:
+  push {r4, lr}              /* 保存现场 */
+
+  ldr r4, =input             /* 加载输入数组的地址到r4 */
+
+  ldr r3, [r4, #4]           /* 读取第二行 */
+  rev r3, r3                 /* 反转字节顺序 */
+  ror r3, r3, #8             /* 循环右移一个字节 */
+
+  str r3, [r4, #4]           /* 存储修改后的第二行 */
+
+  ldr r3, [r4, #8]           /* 读取第三行 */
+  rev r3, r3                 /* 反转字节顺序 */
+  ror r3, r3, #16            /* 循环右移两个字节 */
+
+  str r3, [r4, #8]           /* 存储修改后的第三行 */
+
+  ldr r3, [r4, #12]          /* 读取第四行 */
+  rev r3, r3                 /* 反转字节顺序 */
+  ror r3, r3, #24            /* 循环右移三个字节 */
+
+  str r3, [r4, #12]          /* 存储修改后的第四行 */
+
+  pop {r4, pc}               /* 返回并恢复现场 */
+
+/* 
+   MixColumns子函数 
+   将状态矩阵中的每列进行列混合操作
+*/
+.align
+.global MixColumns
+.type MixColumns, %function
+
+MixColumns:
+  push {r4, r5, r6, lr}      /* 保存现场 */
+
+  ldr r4, =input             /* 加载输入数组的地址到r4 */
+
+  ldr r5, =MixColumnMatrix    /* 加载列混合矩阵的地址到r5 */
+
+  ldmia r4!, {r0, r1, r2, r3} /* 读取第一列 */
+  stmia r4, {r0, r1, r2, r3}  /* 存储修改后的第一列 */
+
+  ldmia r4!, {r0, r1, r2, r3} /* 读取第二列 */
+  stmia r4, {r0, r1, r2, r3}  /* 存储修改后的第二列 */
+
+  ldmia r4!, {r0, r1, r2, r3} /* 读取第三列 */
+  stmia r4, {r0, r1, r2, r3}  /* 存储修改后的第三列 */
+
+  ldmia r4!, {r0, r1, r2, r3} /* 读取第四列 */
+  stmia r4, {r0, r1, r2, r3}  /* 存储修改后的第四列 */
+
+  pop {r4, r5, r6, pc}       /* 返回并恢复现场 */
+/* 
+   AddRoundKey 子函数
+   将轮密钥与状态矩阵进行异或运算
+*/
+.align
+.global AddRoundKey
+.type AddRoundKey, %function
+
+AddRoundKey:
+  push {r4, lr}              /* 保存现场 */
+
+  ldr r4, =input             /* 加载输入数组的地址到r4 */
+
+  ldr r0, [r4]               /* 读取第一列 */
+  eor r0, r0, [r4, #16]      /* 与第一列轮密钥进行异或运算 */
+  str r0, [r4]               /* 存储修改后的第一列 */
+
+  ldr r0, [r4, #4]           /* 读取第二列 */
+  eor r0, r0, [r4, #20]      /* 与第二列轮密钥进行异或运算 */
+  str r0, [r4, #4]           /* 存储修改后的第二列 */
+
+  ldr r0, [r4, #8]           /* 读取第三列 */
+  eor r0, r0, [r4, #24]      /* 与第三列轮密钥进行异或运算 */
+  str r0, [r4, #8]           /* 存储修改后的第三列 */
+
+  ldr r0, [r4, #12]          /* 读取第四列 */
+  eor r0, r0, [r4, #28]      /* 与第四列轮密钥进行异或运算 */
+  str r0, [r4, #12]          /* 存储修改后的第四列 */
+
+  pop {r4, pc}               /* 返回并恢复现场 */
+/* 
+   SubBytes 子函数
+   将状态矩阵中的每个字节替换为S盒中对应的字节
+*/
+.align
+.global SubBytes
+.type SubBytes, %function
+
+SubBytes:
+  push {r4, r5, lr}          /* 保存现场 */
+
+  ldr r4, =input             /* 加载输入数组的地址到r4 */
+  ldr r5, =Sbox              /* 加载S盒的地址到r5 */
+
+  ldr r0, [r4]               /* 读取第一列 */
+  ldrb r1, [r0, r5]          /* 从S盒中获取对应字节 */
+  strb r1, [r0, r5]          /* 替换为S盒中的字节 */
+  
+  ldr r0, [r4, #4]           /* 读取第二列 */
+  ldrb r1, [r0, r5]          /* 从S盒中获取对应字节 */
+  strb r1, [r0, r5]          /* 替换为S盒中的字节 */
+
+  ldr r0, [r4, #8]           /* 读取第三列 */
+  ldrb r1, [r0, r5]          /* 从S盒中获取对应字节 */
+  strb r1, [r0, r5]          /* 替换为S盒中的字节 */
+
+  ldr r0, [r4, #12]          /* 读取第四列 */
+  ldrb r1, [r0, r5]          /* 从S盒中获取对应字节 */
+  strb r1, [r0, r5]          /* 替换为S盒中的字节 */
+
+  pop {r4, r5, lr}           /* 返回并恢复现场 */
+  
+/* 
+   ShiftRows 子函数
+   将状态矩阵中的每个字节按照特定的规则进行循环左移
+*/
+.align
+.global ShiftRows
+.type ShiftRows, %function
+
+ShiftRows:
+  push {r4, r5, r6, lr}      /* 保存现场 */
+
+  ldr r4, =input             /* 加载输入数组的地址到r4 */
+
+  ldr r0, [r4]               /* 读取第一列 */
+  ldr r1, [r4, #4]           /* 读取第二列 */
+  ldr r2, [r4, #8]           /* 读取第三列 */
+  ldr r3, [r4, #12]          /* 读取第四列 */
+
+  mov r5, r1, lsr #8         /* 获取第二列的第一行元素 */
+  mov r6, r2, lsr #16        /* 获取第三列的第一行元素 */
+
+  /* 第一行不移动 */
+
+  /* 第二行循环左移1位 */
+  orr r1, r1, r5, lsl #24    /* 循环左移 */
+  orr r1, r1, r5, lsr #8
+
+  /* 第三行循环左移2位 */
+  orr r2, r2, r6, lsl #16    /* 循环左移 */
+  orr r2, r2, r6, lsr #16
+
+  /* 第四行循环左移3位 */
+  orr r3, r3, r5, lsl #8     /* 循环左移 */
+  orr r3, r3, r5, lsr #24
+
+  str r1, [r4, #4]           /* 存储修改后的第二列 */
+  str r2, [r4, #8]           /* 存储修改后的第三列 */
+  str r3, [r4, #12]          /* 存储修改后的第四列 */
+
+  pop {r4, r5, r6, pc}       /* 返回并恢复现场 */
