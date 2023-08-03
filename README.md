@@ -71,30 +71,55 @@
   实现方式：用python运行
   
   实验原理以及大致思路：
+
+   主要是实现Merkle树的构建和哈希计算功能，首先定义一个函数calculate_hash调用SHA-256算法计算数据的哈希值，build_merkle_tree函数接收一个叶子节点列表，对列表中的叶子节点进行哈希计算和构建Merkle树的操作；对于不同长度的叶子节点数量进行不同的返回处理，详情见代码；对于每一对叶子节点，将左节点计算哈希值，并判断是否存在右节点。如果存在右节点，则计算右节点的哈希值；否则，将右节点的哈希值设为与左节点相同。然后，将左节点和右节点的哈希值进行合并，计算它们的父节点的哈希值。最后，通过递归调用`build_merkle_tree`函数，传入新生成的节点列表来构建更高一层的Merkle树，直到最终生成根节点。
   
   实现效果以及运行结果截图：
   
 
 
   
-  # #project8:Impl Merkle Tree following RFC6962
+  # #project8:AES impl with ARM instruction
   实现方式：用python运行
   
   实验原理以及大致思路：
+  
+  AES算法是基于矩阵运算的对称加密算法，包括字节替代、行移位、列混淆和轮密钥加四个阶段，其中字节替代可以使用查找表方式实现，行移位可以使用循环左移指令，大体思路就是分别实现AES算法中的每一个组成部分，可大致分为SubBytes()、ShiftRows()、MixColumns和AddRoundKey子函数再加上密钥扩展函数，最后进行拼接即可
  
   实现效果以及运行结果截图：
-  # #project9: AES software implementation
+  
+  由于代码还未完善，无法进行运行
+  
+# #project9: AES software implementation
+
   实现方式：用python运行
+
   实验原理以及大致思路：
+
+  AES算法主要包括明文分组、密钥扩展、轮变换（包含四个操作SubBytes、ShiftRows、MixColumns 和 AddRoundKey），只需要分开实现这几部分的函数，进而完成这些功能，再根据算法流程进行拼接即可，这部分在密码学引论实验中已经做过，不再过多解释
+
   实现效果以及运行结果截图：
+
+
   # #project10:report on the application of this deduce technique in Ethereum with ECDSA
+
   实现方式：用python运行
+
   实验原理以及大致思路：
-  实现效果以及运行结果截图：
+
+  利用相关数论知识主要是椭圆曲线相关知识实现ECDSA签名过程、公钥恢复，首先实现判断是否为二次剩余的函数boolQR（）；n在模p下的平方根函数solveQR（）； B 在模 N 下的乘法逆元函数mod_invese（）；求解 b 在模 n 下的乘法逆元，并计算最大公约数为 1 时的结果xgcd()实现这些基本函数再实现椭圆上的点加法add()，epoint_add1()；椭圆上的点乘multi()；密钥生成函数keygen()生成一对公私密钥，其中，私钥(sk)是一个随机生成的整数，公钥(pk)是将私钥乘以基点(G)得到的点；生成消息的签名函数signature()【先计算消息的哈希值(e)，生成一个随机数(k)作为签名中的一个参数，并计算(kG)得到签名中的一个点。接下来，计算签名中的两个值：r = (x坐标)%p，s = (k^(-1))(e + r*sk) % n。最终，返回签名值(r, s)】；最后定义一个密钥推导函数deduce（），【先从签名中获取签名点的x坐标(x)，并根据x坐标计算出两个可能的y坐标。然后，根据消息的哈希值(e)计算出临时点(tmp)。接下来，使用签名中的值(s)和推导出的临时点(tmp)计算得到两个可能的私钥(sk1, sk2)。最后，将每个私钥与推导出的临时点(tmp)相加，并使用签名中的值计算得到两个可能的公钥(pk1, pk2)】
+  
+实现效果以及运行结果截图：
+
+
   # #project11:impl sm2 with RFC6979
-  实现方式：用python运行
-  实验原理以及大致思路：
-  实现效果以及运行结果截图：
+  
+实现方式：用python运行
+  
+实验原理以及大致思路：
+  
+实现效果以及运行结果截图：
+
   # #project13:Implement the above ECMH scheme
   实现方式：用python运行  
 
