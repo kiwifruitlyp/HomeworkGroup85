@@ -51,10 +51,9 @@
 附上多线程报错截图：
 ![04CC5D655603443D57C752EC55F35F24](https://github.com/kiwifruitlyp/HomeworkGroup85/assets/139031774/9df03398-593e-4475-b4c4-982b7a5033e0)
 
-
-
-
 ![image](https://github.com/kiwifruitlyp/HomeworkGroup85/assets/139031774/c08a6ef9-aade-4cbc-812a-648e1b95a3c6)
+![0C7792F63C01BF9368F1FA191E4B5C3F](https://github.com/kiwifruitlyp/HomeworkGroup85/assets/139031774/f3def92d-63bb-4ff0-bedb-e80506751694)
+
 
 
   
@@ -76,6 +75,7 @@
   
   实现效果以及运行结果截图：
   
+![image](https://github.com/kiwifruitlyp/HomeworkGroup85/assets/139031774/6101c549-3ca6-4acc-b637-a1edf140402f)
 
 
   
@@ -99,6 +99,9 @@
   AES算法主要包括明文分组、密钥扩展、轮变换（包含四个操作SubBytes、ShiftRows、MixColumns 和 AddRoundKey），只需要分开实现这几部分的函数，进而完成这些功能，再根据算法流程进行拼接即可，这部分在密码学引论实验中已经做过，不再过多解释
 
   实现效果以及运行结果截图：
+![image](https://github.com/kiwifruitlyp/HomeworkGroup85/assets/139031774/0b474fd2-5265-48c4-a882-9c23ddeb70d5)
+![image](https://github.com/kiwifruitlyp/HomeworkGroup85/assets/139031774/f8b3d0be-64db-469a-9a3d-3089e3269983)
+
 
 
   # #project10:report on the application of this deduce technique in Ethereum with ECDSA
@@ -110,6 +113,7 @@
   利用相关数论知识主要是椭圆曲线相关知识实现ECDSA签名过程、公钥恢复，首先实现判断是否为二次剩余的函数boolQR（）；n在模p下的平方根函数solveQR（）； B 在模 N 下的乘法逆元函数mod_invese（）；求解 b 在模 n 下的乘法逆元，并计算最大公约数为 1 时的结果xgcd()实现这些基本函数再实现椭圆上的点加法add()，epoint_add1()；椭圆上的点乘multi()；密钥生成函数keygen()生成一对公私密钥，其中，私钥(sk)是一个随机生成的整数，公钥(pk)是将私钥乘以基点(G)得到的点；生成消息的签名函数signature()【先计算消息的哈希值(e)，生成一个随机数(k)作为签名中的一个参数，并计算(kG)得到签名中的一个点。接下来，计算签名中的两个值：r = (x坐标)%p，s = (k^(-1))(e + r*sk) % n。最终，返回签名值(r, s)】；最后定义一个密钥推导函数deduce（），【先从签名中获取签名点的x坐标(x)，并根据x坐标计算出两个可能的y坐标。然后，根据消息的哈希值(e)计算出临时点(tmp)。接下来，使用签名中的值(s)和推导出的临时点(tmp)计算得到两个可能的私钥(sk1, sk2)。最后，将每个私钥与推导出的临时点(tmp)相加，并使用签名中的值计算得到两个可能的公钥(pk1, pk2)】
   
 实现效果以及运行结果截图：
+![image](https://github.com/kiwifruitlyp/HomeworkGroup85/assets/139031774/9c0078ff-403c-49b7-aa9b-95f8a86ea98d)
 
 
   # #project11:impl sm2 with RFC6979
@@ -119,6 +123,12 @@
 实验原理以及大致思路：
   
 实现效果以及运行结果截图：
+![image](https://github.com/kiwifruitlyp/HomeworkGroup85/assets/139031774/abb5d02f-38ee-49cb-a11b-2bbebf114990)
+![image](https://github.com/kiwifruitlyp/HomeworkGroup85/assets/139031774/84fec7a2-9067-4cd6-8858-04de88f8d1f1)
+![image](https://github.com/kiwifruitlyp/HomeworkGroup85/assets/139031774/a34d8411-fb39-4ee4-a6e6-541300d88b95)
+
+
+
 
   # #project13:Implement the above ECMH scheme
   实现方式：用python运行  
