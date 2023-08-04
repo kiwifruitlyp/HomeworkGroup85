@@ -134,7 +134,16 @@
 ![image](https://github.com/kiwifruitlyp/HomeworkGroup85/assets/139031774/84fec7a2-9067-4cd6-8858-04de88f8d1f1)
 ![image](https://github.com/kiwifruitlyp/HomeworkGroup85/assets/139031774/a34d8411-fb39-4ee4-a6e6-541300d88b95)
 
-
+  # #project12:verify the above pitfalls with proof-of-concept code
+  
+  实现方式：用python运行
+ 
+  实验原理以及大致思路：
+  
+  首先实现一些基本的函数，辗转相除法求最大公因子gcd()、扩展欧几里算法求模逆inverse（）、椭圆曲线上的点加法函数epoint_add（）【根据输入的点P和Q，进行点加法运算】、椭圆曲线上点的乘法函数epoint_mul（）【根据输入的倍数k和基点g，进行点乘运算】、实现了SM2签名算法SM2_signature()【首先计算消息的哈希值e，然后通过椭圆曲线上的点乘运算得到Z，接着计算签名中的r和s，最后返回结果】、实现了ECDSA签名算法ECDSA_signature()【首先随机选择一个数k，通过椭圆曲线上的点乘运算得到Z，然后计算签名中的r和s，最后返回结果】然后利用这些函数，计算消息的哈希值e，并初始化私钥d和公钥pk。再使用SM2签名算法对消息m进行签名，并计算私钥sk，最后演示在不同情况下计算出sk
+ 
+  实现效果以及运行结果截图：
+![image](https://github.com/kiwifruitlyp/HomeworkGroup85/assets/139031774/a4f13759-a9a4-49d3-96f8-1755b1018211)
 
 
   # #project13:Implement the above ECMH scheme
@@ -142,7 +151,8 @@
   实现方式：用python运行  
 
   实验原理以及大致思路：
-定义多个函数：SM2_Mulyipoint（），其中有两个参数k和p,返回值R = k*P , P为椭圆曲线上的一点 , k为正整数;SM2_Pluspoint()函数，返回值R = P+Q , P、Q为椭圆曲线上的两点 , 加法运算为定义在椭圆曲线上的加法；SM2_Mod（），SM2__Mod_Decimal（）；密钥对生成函数key_gen（）、利用数论知识实现Legendre（）【欧拉准则判断是否为二次剩余】；Tonelli_Shanks（）【Tonelli-Shanks算法求二次剩余】；MultiSetHash（）【定义集合的哈希 sett: bytes型集合】，最后拼凑即可，具体实现见.py文件
+
+  定义多个函数：SM2_Mulyipoint（），其中有两个参数k和p,返回值R = k*P , P为椭圆曲线上的一点 , k为正整数;SM2_Pluspoint()函数，返回值R = P+Q , P、Q为椭圆曲线上的两点 , 加法运算为定义在椭圆曲线上的加法；SM2_Mod（），SM2__Mod_Decimal（）；密钥对生成函数key_gen（）、利用数论知识实现Legendre（）【欧拉准则判断是否为二次剩余】；Tonelli_Shanks（）【Tonelli-Shanks算法求二次剩余】；MultiSetHash（）【定义集合的哈希 sett: bytes型集合】，最后拼凑即可，具体实现见.py文件
  
   实现效果以及运行结果截图：
   ![image](https://github.com/kiwifruitlyp/HomeworkGroup85/assets/139031774/84454de4-8032-416f-8b5e-8df68f8d47bc)
