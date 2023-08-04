@@ -176,15 +176,27 @@
 
 
   
-  # #project15:implement sm2 2P sign with real network communication
+  # #project19: forge a signature to pretend that you are Satoshi
   
   实现方式：用python运行
  
   实验原理以及大致思路：
+
+    PoC存在以下陷阱：
+    
+    泄漏𝑘 导致d的泄漏重复使用𝑘 导致d的泄漏
+    
+    两个用户，使用𝑘 导致d的泄漏, 也就是说他们可以推断彼此的𝑑例如：𝑟, 𝑠 和𝑟,−𝑠 都是有效签名
+
+   假装是佐藤，因为如果验证不正确，就可以伪造签名𝑚 • 相同的𝑑 和𝑘 用于ECDSA和Schnorr签名，导致𝑑的泄露
+
+   接下来实现各个基本函数：判断互素Relatively_Prime（）、求最大公因子Gcd（）、椭圆曲线点的加法Add()、椭圆曲线点的数乘Multiply（）、ECDSA签名Ecdsa_Sign()、ECDSA验证Ecdsa_Verify（）；之后再实现在不同情况下密钥泄露的情况：重用密钥、使用相同密钥；然后再实现不验证m的验证算法Verify_without_m（）、伪装中本聪Pretend（）、Schnorr_Sign签名Schnorr_Sign（）、两种签名使用相同的密钥导致泄露密钥Schnorr_and_ECDSA（）最后实现即可
  
   实现效果以及运行结果截图：
+  ![image](https://github.com/kiwifruitlyp/HomeworkGroup85/assets/139031774/a410041f-58e4-4504-98d2-95904abc1495)
+
   
-  # #project16:implement sm2 2P decrypt with real network communication
+  # #project22:research report on MPT
  
   实现方式：用python运行
   
