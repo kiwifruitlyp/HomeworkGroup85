@@ -153,8 +153,18 @@
   实现方式：用python运行
   
   实验原理以及大致思路：
- 
+
+ PGP是个混合加密算法，它由一个对称加密算法、一个非对称加密算法、与单向散列算法以及一个随机数产生器（从用户击键频率产生伪随机数序列的种子）组成，实现一个简易PGP，调用GMSSL库中封装好的SM2/SM4加解密函数；加密时使用对称加密算法AES加密消息，非对称加密算法SM2加密会话密钥；解密时先使用SM2解密求得会话密钥，再通过AES和会话密钥求解原消息。解密过程定义SM2_enc（）实现SM2加密，定义SM2_dec（）实现SM2解密，定义PGP_Encrypt（）实现PGP加密，定义PGP_Decryp实现PGP解密，具体实现见代码
+  
+  结果分析：由两者运行时间，一个是3秒多，一个是25秒多可以看出用SM2进行PGP比用RSA快很多
+  
   实现效果以及运行结果截图：
+  ![image](https://github.com/kiwifruitlyp/HomeworkGroup85/assets/139031774/254d572c-6cc7-4b9e-9f67-ca4fa477199f)
+  ![image](https://github.com/kiwifruitlyp/HomeworkGroup85/assets/139031774/ecddbd5d-044c-46f5-9a19-7f783a2912a6)
+
+
+
+
   
   # #project15:implement sm2 2P sign with real network communication
   
