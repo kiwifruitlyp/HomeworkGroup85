@@ -196,10 +196,3 @@
   ![image](https://github.com/kiwifruitlyp/HomeworkGroup85/assets/139031774/a410041f-58e4-4504-98d2-95904abc1495)
 
   
-  # #project22:research report on MPT
- 
-  实现方式：用python运行
-  
-  实验原理以及大致思路：
-  
-  实现效果以及运行结果截图：
