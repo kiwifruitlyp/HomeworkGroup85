@@ -142,8 +142,11 @@
   实现方式：用python运行  
 
   实验原理以及大致思路：
+定义多个函数：SM2_Mulyipoint（），其中有两个参数k和p,返回值R = k*P , P为椭圆曲线上的一点 , k为正整数;SM2_Pluspoint()函数，返回值R = P+Q , P、Q为椭圆曲线上的两点 , 加法运算为定义在椭圆曲线上的加法；SM2_Mod（），SM2__Mod_Decimal（）；密钥对生成函数key_gen（）、利用数论知识实现Legendre（）【欧拉准则判断是否为二次剩余】；Tonelli_Shanks（）【Tonelli-Shanks算法求二次剩余】；MultiSetHash（）【定义集合的哈希 sett: bytes型集合】，最后拼凑即可，具体实现见.py文件
  
   实现效果以及运行结果截图：
+  ![image](https://github.com/kiwifruitlyp/HomeworkGroup85/assets/139031774/84454de4-8032-416f-8b5e-8df68f8d47bc)
+
  
   # #project14:Implement a PGP scheme with SM2
   
