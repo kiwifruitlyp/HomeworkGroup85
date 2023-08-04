@@ -121,6 +121,13 @@
 实现方式：用python运行
   
 实验原理以及大致思路：
+
+ 实验需要实现实现SM2算法，其中包括SM2加解密功能，在生成随机参数时，将参数设置为标准文档中的值、SM2密钥交换实现、以及用SM2实现签名并完成验证签名，是否合法，大概思路如下： 加解密过程中，需要定义LeftShift（）、Ti()、FFi()、GGi()、P0（）、P1（）、填充函数padding()、消息扩展函数Extend()、字符转换函数uint_to_str()、寄存器更新函数update（）、用于杂凑计算的哈希函数Hash（）、椭圆曲线上点的加法add（）、多倍加法或点的倍乘mul_add()、密钥派生函数KDF（）【用于从输入得到派生密钥】，加密函数encrypt()【实现基于椭圆曲线密码学的加密过程】、解密函数decrypt（），最后对消息“Liyupei”进行加密，然后解密即可实现SM2加解密功能；
+  
+  首先定义交换方的两个标识符，然后分别使用椭圆曲线上的点和私钥计算两个公钥，之后定义两个函数使得A B双方进行密钥交换，再调用SM2_Dec_Enc.py文件中的相关函数即可实现密钥交换；
+  
+  按照标准文档参数作为测试，在签名过程中生成的随机值用定值代替（使用随机值时只需修改注释）按照签名和验签原理实现SM2签名和验证签名，其中签名需要消息m和Za，签名验证是需要签名、Za、消息和公钥，最后调用函数即可实现签名验证。
+
   
 实现效果以及运行结果截图：
 ![image](https://github.com/kiwifruitlyp/HomeworkGroup85/assets/139031774/abb5d02f-38ee-49cb-a11b-2bbebf114990)
@@ -131,19 +138,33 @@
 
 
   # #project13:Implement the above ECMH scheme
+  
   实现方式：用python运行  
 
   实验原理以及大致思路：
+ 
   实现效果以及运行结果截图：
+ 
   # #project14:Implement a PGP scheme with SM2
+  
   实现方式：用python运行
+  
   实验原理以及大致思路：
+ 
   实现效果以及运行结果截图：
+  
   # #project15:implement sm2 2P sign with real network communication
+  
   实现方式：用python运行
+ 
   实验原理以及大致思路：
+ 
   实现效果以及运行结果截图：
+  
   # #project16:implement sm2 2P decrypt with real network communication
+ 
   实现方式：用python运行
+  
   实验原理以及大致思路：
+  
   实现效果以及运行结果截图：
